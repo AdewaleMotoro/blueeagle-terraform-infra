@@ -1,0 +1,12 @@
+# terraform.tfvars.example
+#
+# Copy this file to `terraform.tfvars` and fill in your values:
+#
+#   cp terraform.tfvars.example terraform.tfvars
+#
+# Then edit `terraform.tfvars` with your own values.
+
+aws_region   = "us-east-1"
+trainee_name = "your-github-username"
+project_name = "blueeagle"
+environment  = "dev"       # must be one of: dev, staging, prod
