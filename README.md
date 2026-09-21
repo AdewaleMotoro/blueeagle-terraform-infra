@@ -25,11 +25,10 @@ My reconstruction of the Wandaprep Academy blueEagle Terraform project.
 
 ## Progress
 
-- [x] Folder structure
-- [x] Bootstrap (S3 + DynamoDB for remote state)
-- [x] Root module (backend, providers, variables, locals, outputs)
-- [x] modules/s3
-- [ ] modules/iam
-- [ ] modules/vpc
-- [ ] Git hooks (pre-push validation)
+[x] Folder structure
+- [x] Bootstrap (S3 + DynamoDB)
+- [x] Root module
+- [x] Modules: s3, iam
+- [ ] Modules: vpc
+- [x] Git hooks (pre-push validation)
 - [ ] GitHub Actions CI/CD
