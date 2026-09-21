@@ -1,4 +1,4 @@
-﻿# modules/s3/main.tf
+# modules/s3/main.tf
 #
 # Creates a secure, versioned S3 bucket for application data.
 # Similar to the bootstrap bucket, but reusable - this module

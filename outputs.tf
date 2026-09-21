@@ -1,4 +1,4 @@
-﻿# outputs.tf
+# outputs.tf
 #
 # Root module outputs - values exposed to the user or to other
 # configurations (e.g., CI/CD pipelines) after `terraform apply`.

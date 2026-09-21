@@ -1,4 +1,4 @@
-﻿# providers.tf
+# providers.tf
 #
 # Declares Terraform version constraints and the AWS provider.
 # This is the standard place to put provider configuration -

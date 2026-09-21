@@ -1,4 +1,4 @@
-﻿# locals.tf
+# locals.tf
 #
 # Computed values used across the root module. "locals" (as opposed to
 # "variables") are not inputs - they're derived inside the configuration.

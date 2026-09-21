@@ -1,4 +1,4 @@
-﻿# main.tf
+# main.tf
 #
 # Root module - wires together the child modules.
 # Child modules are added incrementally as they're built.
@@ -18,8 +18,20 @@
 # }
 
 module "app_s3" {
-  source      = "./modules/s3"
-  name_prefix = local.name_prefix
+  source       = "./modules/s3"
+  name_prefix  = local.name_prefix
   trainee_name = var.trainee_name
-  tags        = local.common_tags
+  tags         = local.common_tags
+}
+
+
+# IAM module — creates a role with read-only access to the app bucket
+
+
+module "app_iam" {
+  source        = "./modules/iam"
+  name_prefix   = local.name_prefix
+  trainee_name  = var.trainee_name
+  tags          = local.common_tags
+  s3_bucket_arn = module.app_s3.bucket_arn # ⭐ cross-module reference
 }

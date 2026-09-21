@@ -2,24 +2,34 @@
 
 My reconstruction of the Wandaprep Academy blueEagle Terraform project.
 
-## Structure
+## Architecture
 
-- `bootstrap/` - One-time setup: S3 + DynamoDB for remote state
-- `modules/` - Reusable modules (iam, s3, vpc) - TBD
-- `scripts/` - Helper scripts - TBD
-- `.githooks/` - Pre-push validation - TBD
-- `.github/workflows/` - GitHub Actions CI/CD - TBD
+- **bootstrap/** — One-time setup creating the S3 bucket + DynamoDB table
+  used for remote state and state locking.
+- **modules/s3/** — Reusable S3 bucket module (versioning, AES256 encryption,
+  public-access-block).
+- **modules/iam/** — (planned) IAM roles and policies.
+- **modules/vpc/** — (planned) VPC, subnets, internet gateway.
 
-## Bootstrap outputs
+## Resources created
 
-- S3 bucket:   `blueeagle-tfstate-morayo-2026` (region: us-east-1)
-- DynamoDB:    `blueeagle-tfstate-lock-morayo-2026`
+### Via bootstrap
+- S3 bucket: `blueeagle-tfstate-morayo-2026` (region: us-east-1)
+- DynamoDB table: `blueeagle-tfstate-lock-morayo-2026`
+
+### Via root + modules
+- S3 bucket: `blueeagle-dev-app`
+  - Versioning: enabled
+  - Encryption: AES256
+  - Public access: blocked
 
 ## Progress
 
 - [x] Folder structure
-- [x] Bootstrap (S3 + DynamoDB)
-- [ ] Root module
-- [ ] Modules (iam, s3, vpc)
-- [ ] Scripts & hooks
-- [ ] GitHub Actions
+- [x] Bootstrap (S3 + DynamoDB for remote state)
+- [x] Root module (backend, providers, variables, locals, outputs)
+- [x] modules/s3
+- [ ] modules/iam
+- [ ] modules/vpc
+- [ ] Git hooks (pre-push validation)
+- [ ] GitHub Actions CI/CD

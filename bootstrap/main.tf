@@ -1,4 +1,4 @@
-﻿# bootstrap
+# bootstrap
 #
 # Run ONCE, locally, with a local state file (there is no remote backend
 # yet - that's what this creates). It provisions the S3 bucket and
