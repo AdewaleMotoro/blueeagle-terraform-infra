@@ -1,0 +1,23 @@
+# Default: normalize to LF on commit, keep LF on checkout
+* text=auto eol=lf
+
+# Shell scripts and hooks MUST use LF (bash requires this)
+*.sh text eol=lf
+.githooks/* text eol=lf
+pre-push text eol=lf
+
+# YAML and Terraform files should use LF for consistency
+*.yml text eol=lf
+*.yaml text eol=lf
+*.tf text eol=lf
+*.tfvars text eol=lf
+
+# Windows-specific files can use CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files (never touch line endings)
+*.png binary
+*.jpg binary
+*.zip binary
+*.pdf binary
