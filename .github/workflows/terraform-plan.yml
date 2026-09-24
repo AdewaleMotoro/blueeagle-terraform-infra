@@ -24,6 +24,7 @@ env:
   AWS_ROLE_ARN: arn:aws:iam::556311299687:role/github-actions-terraform
   AWS_REGION: us-east-1
   TF_VERSION: "1.9.8"
+  TF_VAR_trainee_name: ${{ vars.TF_VAR_trainee_name }}
 
 jobs:
   plan:
@@ -39,17 +40,6 @@ jobs:
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
-      - name: Debug OIDC token claims
-        run: |
-          echo "Requesting OIDC token..."
-          RESPONSE=$(curl -sS \
-            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com")
-          echo "Full response: $RESPONSE"
-          TOKEN=$(echo "$RESPONSE" | jq -r '.value')
-          echo ""
-          echo "Token payload (decoded):"
-          echo "$TOKEN" | cut -d. -f2 | base64 -d 2>/dev/null | jq
 
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
@@ -67,7 +57,7 @@ jobs:
       - name: Terraform plan
         id: plan
         run: |
-          terraform plan -no-color -out=tfplan 2>&1 | tee plan_output.txt
+          terraform plan -no-color -input=false -out=tfplan 2>&1 | tee plan_output.txt
           echo "exitcode=$?" >> "$GITHUB_OUTPUT"
         continue-on-error: true
 
