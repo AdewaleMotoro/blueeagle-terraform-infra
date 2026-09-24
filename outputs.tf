@@ -84,3 +84,22 @@ output "internet_gateway_id" {
   description = "ID of the Internet Gateway."
   value       = module.app_vpc.internet_gateway_id
 }
+
+
+# ---
+# EC2 module outputs
+# ---
+output "ec2_instance_id" {
+  description = "ID of the EC2 instance."
+  value       = module.app_ec2.instance_id
+}
+
+output "ec2_public_ip" {
+  description = "Public IP of the EC2 instance."
+  value       = module.app_ec2.public_ip
+}
+
+output "ec2_ssh_command" {
+  description = "SSH command to connect (replace <key> with your .pem path)."
+  value       = module.app_ec2.ssh_command
+}

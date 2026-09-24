@@ -42,3 +42,19 @@ module "app_vpc" {
   tags         = local.common_tags
   # vpc_cidr and az_count use defaults from the module (10.0.0.0/16, 2 AZs)
 }
+
+
+# ---
+# EC2 module — application compute instance
+# ---
+module "app_ec2" {
+  source                = "./modules/ec2"
+  name_prefix           = local.name_prefix
+  trainee_name          = var.trainee_name
+  tags                  = local.common_tags
+  vpc_id                = module.app_vpc.vpc_id
+  subnet_id             = module.app_vpc.public_subnet_ids[0]
+  instance_profile_name = module.app_iam.instance_profile_name
+  key_name              = var.ec2_key_name
+  allowed_ssh_cidr      = var.allowed_ssh_cidr
+}

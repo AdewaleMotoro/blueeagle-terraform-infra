@@ -56,7 +56,8 @@ data "aws_iam_policy_document" "github_actions_assume_role" {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
       values = [
-        "repo:${var.github_org}/${var.github_repo}:*"
+        "repo:${var.github_org}/${var.github_repo}:*",
+        "repo:${var.github_org}@*/${var.github_repo}@*:*",
       ]
     }
 
@@ -86,4 +87,34 @@ resource "aws_iam_role" "github_actions" {
 resource "aws_iam_role_policy_attachment" "github_actions" {
   role       = aws_iam_role.github_actions.name
   policy_arn = var.permissions_policy_arn
+}
+
+# ---
+# State locking policy — the role needs to WRITE lock records to DynamoDB.
+# ReadOnlyAccess alone doesn't cover this. We scope it tightly to the
+# one specific lock table used by Terraform state.
+# ---
+data "aws_iam_policy_document" "state_lock" {
+  statement {
+    sid    = "TerraformStateLockManagement"
+    effect = "Allow"
+    actions = [
+      "dynamodb:GetItem",
+      "dynamodb:PutItem",
+      "dynamodb:DeleteItem",
+      "dynamodb:DescribeTable",
+    ]
+    resources = [var.state_lock_table_arn]
+  }
+}
+
+resource "aws_iam_policy" "state_lock" {
+  name        = "${var.role_name}-state-lock"
+  description = "Allow GitHub Actions to acquire/release Terraform state locks"
+  policy      = data.aws_iam_policy_document.state_lock.json
+}
+
+resource "aws_iam_role_policy_attachment" "state_lock" {
+  role       = aws_iam_role.github_actions.name
+  policy_arn = aws_iam_policy.state_lock.arn
 }

@@ -36,3 +36,15 @@ variable "environment" {
 
 //Prevents typos ("prod" vs "Prod" vs "production") from silently creating mislabeled resources
 # Triggering plan workflow test
+
+
+variable "ec2_key_name" {
+  description = "Name of the SSH key pair created in AWS console."
+  type        = string
+  default     = "blueeagle-dev-key"
+}
+
+variable "allowed_ssh_cidr" {
+  description = "CIDR block allowed to SSH into EC2. Use your-ip/32 for safety."
+  type        = string
+}
