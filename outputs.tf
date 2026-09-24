@@ -26,7 +26,7 @@ output "trainee_name" {
   value       = var.trainee_name
 }
 
-# ---
+# --- 
 # S3 module outputs
 # ---
 output "app_bucket_name" {
